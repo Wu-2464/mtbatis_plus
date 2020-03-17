@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <span th:text="${msg}"></span><br>
+    <span th:text="${session.msg2}"></span><br>
+    <span th:text="${#dates.format(session.date,'yyyy-MM-dd')}"></span><br>
+
+    <div th:if="${#lists.size(userList)>0}">
+        <table>
+            <tr>
+                <td>用户姓名</td>
+                <td>用户密码</td>
+                <td>出生日期</td>
+                <td>用户性别</td>
+            </tr>
+            <tr th:each="user:${userList}" th:class="${userStat.odd}?'odd'">
+                <td th:text="${user.getUserName()}"></td>
+                <td th:text="${user.getUserPassword()}"></td>
+                <td th:text="${user.getBirthday()}"></td>
+                <td th:text="(${user.getGender()}==1)?'男':'女'"></td>
+                <td th:text="${userStat.size+','+userStat.index+','+userStat.count}">下标</td>
+            </tr>
+        </table>
+    </div>
+    <br>
+        <div th:switch="${count}">
+            <p th:case="1">变量值为1</p>
+            <p th:case="2">变量值为2</p>
+        </div>
+    <br>
+    <a th:href="@{/user/list(current=${msg})}">qwf</a><br>
+
+    <div th:object="${session.user}">
+        <p>userName:<span th:text="${session.user.userName}"></span></p>
+        <p>userPassword：<span th:text="*{userPassword}"></span></p>
+</div>
+    <div th:insert="footer::copy"></div>
+    <div th:replace="footer::copy"></div>
+    <div th:include="footer::copy"></div>
+</body>
+</html>
